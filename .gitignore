@@ -1,0 +1,8 @@
+.instances.ttl
+.manual.ttl
+.schema.ttl
+tests
+log
+results
+riot.log
+pellet.log

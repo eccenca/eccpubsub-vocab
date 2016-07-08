@@ -1,0 +1,187 @@
+@prefix : <https://vocab.eccenca.com/pubsub/> .
+@prefix ecc: <https://ns.eccenca.com/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix voaf: <http://purl.org/vocommons/voaf#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+:
+  a owl:Ontology , voaf:Vocabulary ;
+  rdfs:label "eccpub: eccenca Publish-Subscribe Vocabulary"@en ;
+  rdfs:comment "The eccenca Publish-Subscribe Vocabulary defines concepts and relations to create statements about publishers, subscribers and their subscriptions in a Publish-Subscribe environment."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-08"^^xsd:date ;
+  dct:modified "2016-07-08"^^xsd:date ;
+  owl:versionInfo "SNAPSHOT" ;
+  dct:rights "Copyright © 2016 eccenca GmbH" ;
+  dct:publisher ecc:eccenca-GmbH ;
+  <http://creativecommons.org/ns#license> <http://creativecommons.org/licenses/by/3.0/> ;
+  dct:creator ecc:mfrommhold ;
+  void:vocabulary
+    <http://purl.org/dc/terms/> ,
+    <http://purl.org/vocab/vann/> ,
+    <http://www.w3.org/2003/06/sw-vocab-status/ns#> ,
+    <http://xmlns.com/foaf/0.1/> ;
+  vann:preferredNamespacePrefix "eccpub" ;
+  vann:preferredNamespaceUri "https://vocab.eccenca.com/pubsub/" ;
+.
+
+ecc:eccenca-GmbH
+  a foaf:Organization, dct:Agent ;
+  foaf:name "eccenca GmbH" ;
+.
+
+ecc:mfrommhold
+  a foaf:Person, dct:Agent ;
+  foaf:name "Marvin Frommhold" ;
+.
+
+<http://creativecommons.org/licenses/by/3.0/>
+  rdfs:label "Creative Commons Attribution 3.0 Unported" ;
+.
+
+#
+# Concepts
+#
+
+:Subscription
+  a owl:Class ;
+  rdfs:label "Subscription"@en ;
+  rdfs:comment "A unique relation to a topic by a subscriber that indicates it should receive updates for that topic."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-08"^^xsd:date ;
+  dct:modified "2016-07-08"^^xsd:date ;
+  vs:term_status "testing"@en ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :topic ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :callback ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :secret ;
+    owl:maxCardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+.
+
+:Subscriber
+  a owl:Class ;
+  rdfs:label "Subscriber"@en ;
+  rdfs:comment "An entity that wants to be notified of changes on a topic"@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-08"^^xsd:date ;
+  dct:modified "2016-07-08"^^xsd:date ;
+  vs:term_status "testing"@en ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty dct:identifier ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+.
+
+#
+# Relations
+#
+
+:topic
+  a owl:DatatypeProperty ;
+  rdfs:label "topic URL"@en ;
+  rdfs:comment "An HTTP [RFC2616] resource URL for which updates should be published."@en ;
+  rdfs:isDefinedBy : ;
+  rdfs:domain :Subscription ;
+  rdfs:range xsd:anyURI ;
+  dct:issued "2016-07-08"^^xsd:date ;
+  dct:modified "2016-07-08"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:callback
+  a owl:DatatypeProperty ;
+  rdfs:label "callback URL"@en ;
+  rdfs:comment "The URL [RFC3986] at which a subscriber wishes to receive notifications."@en ;
+  rdfs:isDefinedBy : ;
+  rdfs:domain :Subscription ;
+  rdfs:range xsd:anyURI ;
+  dct:issued "2016-07-08"^^xsd:date ;
+  dct:modified "2016-07-08"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:secret
+  a owl:DatatypeProperty ;
+  rdfs:label "secret"@en ;
+  rdfs:comment "A secret string that will be used to compute an HMAC digest for authorized content distribution. If not supplied, the HMAC digest will not be present for content distribution requests."@en ;
+  rdfs:isDefinedBy : ;
+  rdfs:domain :Subscription ;
+  rdfs:range xsd:string ;
+  dct:issued "2016-07-08"^^xsd:date ;
+  dct:modified "2016-07-08"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+#
+# External vocabulary usage
+#
+# Importing the required ontologies leads to non-conformance with the OWL 2 DL
+# profile. Therefore, their classes and properties are declared with a reference
+# to the original ontology that defined them.
+#
+# Take a look at this question for a better overview on the topic:
+# http://answers.semanticweb.com/questions/1105/owl-dl-compliance-why-redefining-existing-conceptspropeties-in-own-ontology
+#
+
+<http://creativecommons.org/ns#license>
+  a owl:AnnotationProperty ;
+  rdfs:isDefinedBy <http://creativecommons.org/ns>
+.
+
+dct:creator
+  a owl:AnnotationProperty ;
+  rdfs:isDefinedBy <http://purl.org/dc/terms/>
+.
+
+dct:issued
+  a owl:AnnotationProperty ;
+  rdfs:isDefinedBy <http://purl.org/dc/terms/>
+.
+
+dct:modified
+  a owl:AnnotationProperty ;
+  rdfs:isDefinedBy <http://purl.org/dc/terms/>
+.
+
+dct:rights
+  a owl:AnnotationProperty ;
+  rdfs:isDefinedBy <http://purl.org/dc/terms/>
+.
+
+dct:publisher
+  a owl:AnnotationProperty ;
+  rdfs:isDefinedBy <http://purl.org/dc/terms/>
+.
+
+dct:identifier
+  a owl:AnnotationProperty ;
+  rdfs:isDefinedBy <http://purl.org/dc/terms/>
+.
+
+vann:preferredNamespacePrefix
+  a owl:AnnotationProperty ;
+  rdfs:isDefinedBy <http://purl.org/vocab/vann/>
+.
+
+vann:preferredNamespaceUri
+  a owl:AnnotationProperty ;
+  rdfs:isDefinedBy <http://purl.org/vocab/vann/>
+.
