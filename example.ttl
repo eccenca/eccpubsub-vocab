@@ -1,0 +1,26 @@
+@prefix : <https://vocab.eccenca.com/pubsub/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix dct: <http://purl.org/dc/terms/>.
+@prefix ex: <http://example.org/>.
+
+# Publisher Site
+#
+ex:34239874932874 a :Subscription ;
+  dct:created "2016-07-11T12:12:00"^^xsd:dateTime ;
+  dct:modified "2016-07-11T12:12:00"^^xsd:dateTime ;
+  :status :ACTIVE ; # :CANCELED
+  :topic <http://example.org/someTopic> ;
+  :callbackEndpoint <http://example.org/pubsub/123> ;
+  :secret "someSecret"^^xsd:string ;
+.
+
+#
+# Subscriber Site
+#
+ex:123 a :SubscriptionRequest ;
+  :requestStatus :PENDING ; # :VERIFIED, :CANCELED
+  dct:created "2016-07-11T12:12:00"^^xsd:dateTime ;
+  dct:modified "2016-07-11T12:12:00"^^xsd:dateTime ;
+  :topic <http://example.org/someTopic> ;
+  :hubEndpoint <http://example.org/pubsub/hub> ;
+.
