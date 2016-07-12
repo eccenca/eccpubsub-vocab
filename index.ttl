@@ -1,5 +1,6 @@
 @prefix : <https://vocab.eccenca.com/pubsub/> .
 @prefix ecc: <https://ns.eccenca.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -7,28 +8,27 @@
 @prefix vann: <http://purl.org/vocab/vann/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix void: <http://rdfs.org/ns/void#> .
-@prefix doap: <http://usefulinc.com/ns/doap#> .
 @prefix voaf: <http://purl.org/vocommons/voaf#> .
 @prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
 
 :
   a owl:Ontology , voaf:Vocabulary ;
-  rdfs:label "eccpub: eccenca Publish-Subscribe Vocabulary"@en ;
-  rdfs:comment "The eccenca Publish-Subscribe Vocabulary defines concepts and relations to create statements about publishers, subscribers and their subscriptions in a Publish-Subscribe environment."@en ;
+  rdfs:label "eccpubsub: eccenca Publish-Subscribe Vocabulary"@en ;
+  rdfs:comment "The eccenca Publish-Subscribe Vocabulary defines concepts and relations to create statements about publishers, subscribers and their subscriptions in a Publish-Subscribe environment based on the PubSubHubbub Core 0.4 specification."@en ;
   rdfs:isDefinedBy : ;
-  dct:issued "2016-07-08"^^xsd:date ;
-  dct:modified "2016-07-08"^^xsd:date ;
-  owl:versionInfo "SNAPSHOT" ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  owl:versionInfo "1.0" ;
   dct:rights "Copyright © 2016 eccenca GmbH" ;
   dct:publisher ecc:eccenca-GmbH ;
   <http://creativecommons.org/ns#license> <http://creativecommons.org/licenses/by/3.0/> ;
-  dct:creator ecc:mfrommhold ;
+  dct:creator ecc:mfrommhold, <http://sebastian.tramp.name> ;
   void:vocabulary
     <http://purl.org/dc/terms/> ,
     <http://purl.org/vocab/vann/> ,
     <http://www.w3.org/2003/06/sw-vocab-status/ns#> ,
     <http://xmlns.com/foaf/0.1/> ;
-  vann:preferredNamespacePrefix "eccpub" ;
+  vann:preferredNamespacePrefix "eccpubsub" ;
   vann:preferredNamespaceUri "https://vocab.eccenca.com/pubsub/" ;
 .
 
@@ -42,6 +42,11 @@ ecc:mfrommhold
   foaf:name "Marvin Frommhold" ;
 .
 
+<http://sebastian.tramp.name>
+  a foaf:Person , dct:Agent ;
+  foaf:name "Sebastian Tramp" ;
+.
+
 <http://creativecommons.org/licenses/by/3.0/>
   rdfs:label "Creative Commons Attribution 3.0 Unported" ;
 .
@@ -52,12 +57,27 @@ ecc:mfrommhold
 
 :Subscription
   a owl:Class ;
-  rdfs:label "Subscription"@en ;
+  rdfs:label "subscription"@en ;
   rdfs:comment "A unique relation to a topic by a subscriber that indicates it should receive updates for that topic."@en ;
   rdfs:isDefinedBy : ;
-  dct:issued "2016-07-08"^^xsd:date ;
-  dct:modified "2016-07-08"^^xsd:date ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
   vs:term_status "testing"@en ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty dct:created ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty dct:modified ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :state ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+  ] ;
   rdfs:subClassOf [
     a owl:Restriction ;
     owl:onProperty :topic ;
@@ -73,48 +93,177 @@ ecc:mfrommhold
     owl:onProperty :secret ;
     owl:maxCardinality "1"^^xsd:nonNegativeInteger
   ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :deniedReason ;
+    owl:maxCardinality "1"^^xsd:nonNegativeInteger
+  ] ;
 .
 
-:Subscriber
+:SubscriptionRequest
   a owl:Class ;
-  rdfs:label "Subscriber"@en ;
-  rdfs:comment "An entity that wants to be notified of changes on a topic"@en ;
+  rdfs:label "subscription request"@en ;
+  rdfs:comment "A request to a hub by a subscriber indicating interest to updates of a topic."@en ;
   rdfs:isDefinedBy : ;
-  dct:issued "2016-07-08"^^xsd:date ;
-  dct:modified "2016-07-08"^^xsd:date ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
   vs:term_status "testing"@en ;
   rdfs:subClassOf [
     a owl:Restriction ;
-    owl:onProperty dct:identifier ;
+    owl:onProperty dct:created ;
     owl:cardinality "1"^^xsd:nonNegativeInteger
   ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty dct:modified ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :requestState ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :topic ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :hub ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :deniedReason ;
+    owl:maxCardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+.
+
+:Endpoint
+  a owl:Class ;
+  rdfs:label "endpoint"@en ;
+  rdfs:comment "A PubSubHubbub HTTP endpoint. Individuals of this class MUST be referenced by their URL."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:CallbackEndpoint
+  a owl:Class ;
+  rdfs:subClassOf :Endpoint ;
+  rdfs:label "callback endpoint"@en ;
+  rdfs:comment "An HTTP endpoint acting as callback of a subscriber."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:HubEndpoint
+  a owl:Class ;
+  rdfs:subClassOf :Endpoint ;
+  rdfs:label "hub endpoint"@en ;
+  rdfs:comment "An HTTP endpoint acting as hub."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:SubscriptionState
+  a owl:Class ;
+  rdfs:label "subscription state"@en ;
+  rdfs:comment "A state of a subscription."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+  owl:equivalentClass [
+   a owl:Class ;
+   owl:oneOf ( :SUBSCRIPTION_ACTIVE :SUBSCRIPTION_CANCELED :SUBSCRIPTION_DENIED )
+ ]
+.
+
+:SubscriptionRequestState
+  a owl:Class ;
+  rdfs:label "subscription request state"@en ;
+  rdfs:comment "A state of a subscription request."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+  owl:equivalentClass [
+   a owl:Class ;
+   owl:oneOf ( :SUBSCRIPTION_REQUEST_PENDING :SUBSCRIPTION_REQUEST_VERIFIED :SUBSCRIPTION_REQUEST_DENIED :SUBSCRIPTION_REQUEST_CANCELED :SUBSCRIPTION_REQUEST_DELETED )
+ ]
 .
 
 #
 # Relations
 #
 
-:topic
-  a owl:DatatypeProperty ;
-  rdfs:label "topic URL"@en ;
-  rdfs:comment "An HTTP [RFC2616] resource URL for which updates should be published."@en ;
+:state
+  a owl:ObjectProperty ;
+  rdfs:label "subscription state"@en ;
+  rdfs:comment "The state of a subscription."@en ;
   rdfs:isDefinedBy : ;
   rdfs:domain :Subscription ;
-  rdfs:range xsd:anyURI ;
-  dct:issued "2016-07-08"^^xsd:date ;
-  dct:modified "2016-07-08"^^xsd:date ;
+  rdfs:range :SubscriptionState ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:requestState
+  a owl:ObjectProperty ;
+  rdfs:label "subscription request state"@en ;
+  rdfs:comment "The state of a subscription request."@en ;
+  rdfs:isDefinedBy : ;
+  rdfs:domain :SubscriptionRequest ;
+  rdfs:range :SubscriptionRequestState ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:topic
+  a owl:ObjectProperty ;
+  rdfs:label "topic URI"@en ;
+  rdfs:comment "The resource URI for which updates should be published."@en ;
+  rdfs:isDefinedBy : ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( :Subscription :SubscriptionRequest )
+  ] ;
+  rdfs:range owl:Thing ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
   vs:term_status "testing"@en ;
 .
 
 :callback
-  a owl:DatatypeProperty ;
+  a owl:ObjectProperty ;
   rdfs:label "callback URL"@en ;
-  rdfs:comment "The URL [RFC3986] at which a subscriber wishes to receive notifications."@en ;
+  rdfs:comment "The URL at which a subscriber wishes to receive notifications."@en ;
   rdfs:isDefinedBy : ;
   rdfs:domain :Subscription ;
-  rdfs:range xsd:anyURI ;
-  dct:issued "2016-07-08"^^xsd:date ;
-  dct:modified "2016-07-08"^^xsd:date ;
+  rdfs:range :CallbackEndpoint ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:hub
+  a owl:ObjectProperty ;
+  rdfs:label "hub URL"@en ;
+  rdfs:comment "The URL of the hub to which the request is addressed."@en ;
+  rdfs:isDefinedBy : ;
+  rdfs:domain :SubscriptionRequest ;
+  rdfs:range :HubEndpoint ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
   vs:term_status "testing"@en ;
 .
 
@@ -125,8 +274,107 @@ ecc:mfrommhold
   rdfs:isDefinedBy : ;
   rdfs:domain :Subscription ;
   rdfs:range xsd:string ;
-  dct:issued "2016-07-08"^^xsd:date ;
-  dct:modified "2016-07-08"^^xsd:date ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:deniedReason
+  a owl:DatatypeProperty ;
+  rdfs:label "reason for denial"@en ;
+  rdfs:comment "The reason for which the subscription (request) has been denied."@en ;
+  rdfs:isDefinedBy : ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( :Subscription :SubscriptionRequest )
+  ] ;
+  rdfs:range xsd:string ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+#
+# Individuals
+#
+
+:SUBSCRIPTION_ACTIVE
+  a :SubscriptionState ;
+  rdfs:label "active"@en ;
+  rdfs:comment "Indicates that a subscription is valided and verified."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:SUBSCRIPTION_CANCELED
+  a :SubscriptionState ;
+  rdfs:label "canceled"@en ;
+  rdfs:comment "Indicates that a susbcription was canceled by the subscriber."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:SUBSCRIPTION_DENIED
+  a :SubscriptionState ;
+  rdfs:label "denied"@en ;
+  rdfs:comment "Indicates that a subscription was denied by a publisher."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:SUBSCRIPTION_REQUEST_PENDING
+  a :SubscriptionRequestState ;
+  rdfs:label "pending"@en ;
+  rdfs:comment "Indicates that a subscription request was successfully sent to the hub but is not yet verified."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:SUBSCRIPTION_REQUEST_VERIFIED
+  a :SubscriptionRequestState ;
+  rdfs:label "verified"@en ;
+  rdfs:comment "Indicates that a subscription request was successfully validated and verified."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:SUBSCRIPTION_REQUEST_DENIED
+  a :SubscriptionRequestState ;
+  rdfs:label "denied"@en ;
+  rdfs:comment "Indicates that a subscription request was denied."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:SUBSCRIPTION_REQUEST_CANCELED
+  a :SubscriptionRequestState ;
+  rdfs:label "canceled"@en ;
+  rdfs:comment "Indicates that a subscription cancellation request was successfully sent to the hub but is not yet verified."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
+  vs:term_status "testing"@en ;
+.
+
+:SUBSCRIPTION_REQUEST_DELETED
+  a :SubscriptionRequestState ;
+  rdfs:label "deleted"@en ;
+  rdfs:comment "Indicates that a subscription cancellation request was successfully verified."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-12"^^xsd:date ;
   vs:term_status "testing"@en ;
 .
 
@@ -152,6 +400,11 @@ dct:creator
 .
 
 dct:issued
+  a owl:AnnotationProperty ;
+  rdfs:isDefinedBy <http://purl.org/dc/terms/>
+.
+
+dct:created
   a owl:AnnotationProperty ;
   rdfs:isDefinedBy <http://purl.org/dc/terms/>
 .

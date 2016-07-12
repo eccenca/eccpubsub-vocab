@@ -1,26 +1,47 @@
-@prefix : <https://vocab.eccenca.com/pubsub/>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-@prefix dct: <http://purl.org/dc/terms/>.
-@prefix ex: <http://example.org/>.
+@prefix : <https://vocab.eccenca.com/pubsub/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix ex: <http://example.org/> .
 
-# Publisher Site
 #
-ex:34239874932874 a :Subscription ;
-  dct:created "2016-07-11T12:12:00"^^xsd:dateTime ;
-  dct:modified "2016-07-11T12:12:00"^^xsd:dateTime ;
-  :status :ACTIVE ; # :CANCELED
-  :topic <http://example.org/someTopic> ;
-  :callbackEndpoint <http://example.org/pubsub/123> ;
-  :secret "someSecret"^^xsd:string ;
+# Subscription Repository
+#
+
+ex:d3b07384d113edec49eaa6238ad5ff00 a :Subscription ;
+  dct:created "2016-07-11T12:12:05"^^xsd:dateTime ;
+  dct:modified "2016-07-11T12:12:05"^^xsd:dateTime ;
+  :state :SUBSCRIPTION_ACTIVE ;
+  :topic <http://example.org/topic/foo> ;
+  :callback <http://example.org/pubsub/549e80f319af070f8ea8d0f149a149c2> ;
+  :secret "foo"^^xsd:string ;
+.
+
+ex:c157a79031e1c40f85931829bc5fc552 a :Subscription ;
+  dct:created "2016-07-11T13:37:05"^^xsd:dateTime ;
+  dct:modified "2016-07-11T13:37:05"^^xsd:dateTime ;
+  :state :SUBSCRIPTION_DENIED ;
+  :topic <http://example.org/topic/bar> ;
+  :callback <http://example.org/pubsub/3f7c6128876dd6b37de711df6e080854> ;
+  :deniedReason "Not authorized" ;
 .
 
 #
-# Subscriber Site
+# Subscription Request Repository
 #
-ex:123 a :SubscriptionRequest ;
-  :requestStatus :PENDING ; # :VERIFIED, :CANCELED
+
+ex:549e80f319af070f8ea8d0f149a149c2 a :SubscriptionRequest ;
   dct:created "2016-07-11T12:12:00"^^xsd:dateTime ;
-  dct:modified "2016-07-11T12:12:00"^^xsd:dateTime ;
-  :topic <http://example.org/someTopic> ;
-  :hubEndpoint <http://example.org/pubsub/hub> ;
+  dct:modified "2016-07-11T12:12:05"^^xsd:dateTime ;
+  :requestState :SUBSCRIPTION_REQUEST_VERIFIED ;
+  :topic <http://example.org/topic/foo> ;
+  :hub <http://example.org/pubsub/hub> ;
+.
+
+ex:3f7c6128876dd6b37de711df6e080854 a :SubscriptionRequest ;
+  dct:created "2016-07-11T13:37:00"^^xsd:dateTime ;
+  dct:modified "2016-07-11T13:37:05"^^xsd:dateTime ;
+  :requestState :SUBSCRIPTION_REQUEST_DENIED ;
+  :topic <http://example.org/topic/bar> ;
+  :hub <http://example.org/pubsub/hub> ;
+  :deniedReason "Anonymous subscriptions are not allowed." ;
 .
