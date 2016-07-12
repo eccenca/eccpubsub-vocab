@@ -10,6 +10,7 @@
 @prefix void: <http://rdfs.org/ns/void#> .
 @prefix voaf: <http://purl.org/vocommons/voaf#> .
 @prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
 
 :
   a owl:Ontology , voaf:Vocabulary ;
@@ -18,7 +19,7 @@
   rdfs:isDefinedBy : ;
   dct:issued "2016-07-12"^^xsd:date ;
   dct:modified "2016-07-12"^^xsd:date ;
-  owl:versionInfo "1.0" ;
+  owl:versionInfo "1.0.0" ;
   dct:rights "Copyright © 2016 eccenca GmbH" ;
   dct:publisher ecc:eccenca-GmbH ;
   <http://creativecommons.org/ns#license> <http://creativecommons.org/licenses/by/3.0/> ;
@@ -30,6 +31,11 @@
     <http://xmlns.com/foaf/0.1/> ;
   vann:preferredNamespacePrefix "eccpubsub" ;
   vann:preferredNamespaceUri "https://vocab.eccenca.com/pubsub/" ;
+  doap:implements <https://superfeedr-misc.s3.amazonaws.com/pubsubhubbub-core-0.4.html> ;
+  doap:homepage <https://github.com/eccenca/eccpubsub-vocab> ;
+  doap:bug-database <https://github.com/eccenca/eccpubsub-vocab/issues> ;
+  doap:download-page <https://github.com/eccenca/eccpubsub-vocab/releases> ;
+  doap:repository <https://github.com/eccenca/eccpubsub-vocab.git> ;
 .
 
 ecc:eccenca-GmbH
@@ -49,6 +55,10 @@ ecc:mfrommhold
 
 <http://creativecommons.org/licenses/by/3.0/>
   rdfs:label "Creative Commons Attribution 3.0 Unported" ;
+.
+
+<https://superfeedr-misc.s3.amazonaws.com/pubsubhubbub-core-0.4.html> a doap:Specification;
+    rdfs:label "PubSubHubbub Core 0.4 -- Working Draft" ;
 .
 
 #
