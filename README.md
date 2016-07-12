@@ -7,6 +7,3 @@ The eccenca Publish-Subscribe Vocabulary defines concepts and relations to creat
 * `index.ttl` - the main ontology namespace document (Tbox)
 * `example.ttl` - sample data using the ontology schema (Abox)
 
-## Development
-
-See `make help` for a list of available build targets. For a comprehensive documentation of the various make targets please refer to `includes/README.md`.
