@@ -312,10 +312,10 @@ aksw:MarvinFrommhold
 :SUBSCRIPTION_ACTIVE
   a :SubscriptionState ;
   rdfs:label "active"@en ;
-  rdfs:comment "Indicates that a subscription is valided and verified."@en ;
+  rdfs:comment "Indicates that a subscription is validated and verified."@en ;
   rdfs:isDefinedBy : ;
   dct:issued "2016-07-12"^^xsd:date ;
-  dct:modified "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-13"^^xsd:date ;
   vs:term_status "testing"@en ;
 .
 
