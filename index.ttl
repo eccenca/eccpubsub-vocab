@@ -1,5 +1,6 @@
 @prefix : <https://vocab.eccenca.com/pubsub/> .
 @prefix ecc: <https://ns.eccenca.com/> .
+@prefix aksw: <http://aksw.org/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -18,12 +19,12 @@
   rdfs:comment "The eccenca Publish-Subscribe Vocabulary defines concepts and relations to create statements about publishers, subscribers and their subscriptions in a Publish-Subscribe environment based on the PubSubHubbub Core 0.4 specification."@en ;
   rdfs:isDefinedBy : ;
   dct:issued "2016-07-12"^^xsd:date ;
-  dct:modified "2016-07-12"^^xsd:date ;
+  dct:modified "2016-07-13"^^xsd:date ;
   owl:versionInfo "SNAPSHOT" ;
   dct:rights "Copyright © 2016 eccenca GmbH" ;
   dct:publisher ecc:eccenca-GmbH ;
   <http://creativecommons.org/ns#license> <http://creativecommons.org/licenses/by/3.0/> ;
-  dct:creator ecc:mfrommhold, <http://sebastian.tramp.name> ;
+  dct:creator aksw:MarvinFrommhold, <http://sebastian.tramp.name> ;
   void:vocabulary
     <http://purl.org/dc/terms/> ,
     <http://purl.org/vocab/vann/> ,
@@ -31,7 +32,7 @@
     <http://xmlns.com/foaf/0.1/> ;
   vann:preferredNamespacePrefix "eccpubsub" ;
   vann:preferredNamespaceUri "https://vocab.eccenca.com/pubsub/" ;
-  doap:implements <https://superfeedr-misc.s3.amazonaws.com/pubsubhubbub-core-0.4.html> ;
+  doap:implements <http://pubsubhubbub.github.io/PubSubHubbub/pubsubhubbub-core-0.4.html> ;
   doap:homepage <https://github.com/eccenca/eccpubsub-vocab> ;
   doap:bug-database <https://github.com/eccenca/eccpubsub-vocab/issues> ;
   doap:download-page <https://github.com/eccenca/eccpubsub-vocab/releases> ;
@@ -43,7 +44,7 @@ ecc:eccenca-GmbH
   foaf:name "eccenca GmbH" ;
 .
 
-ecc:mfrommhold
+aksw:MarvinFrommhold
   a foaf:Person, dct:Agent ;
   foaf:name "Marvin Frommhold" ;
 .
@@ -57,7 +58,7 @@ ecc:mfrommhold
   rdfs:label "Creative Commons Attribution 3.0 Unported" ;
 .
 
-<https://superfeedr-misc.s3.amazonaws.com/pubsubhubbub-core-0.4.html> a doap:Specification;
+<http://pubsubhubbub.github.io/PubSubHubbub/pubsubhubbub-core-0.4.html> a doap:Specification;
     rdfs:label "PubSubHubbub Core 0.4 -- Working Draft" ;
 .
 
