@@ -29,19 +29,33 @@ ex:c157a79031e1c40f85931829bc5fc552 a :Subscription ;
 # Subscription Request Repository
 #
 
-ex:549e80f319af070f8ea8d0f149a149c2 a :SubscriptionRequest ;
-  dct:created "2016-07-11T12:12:00"^^xsd:dateTime ;
-  dct:modified "2016-07-11T12:12:05"^^xsd:dateTime ;
-  :requestState :SUBSCRIPTION_REQUEST_VERIFIED ;
-  :topic <http://example.org/topic/foo> ;
-  :hub <http://example.org/pubsub/hub> ;
+ex:7d28311bdb270e2799cc79304a9df22e a :GraphSyncSubscriptionRequest, :SubscriptionRequest ;
+  dct:created "2016-08-22T20:06:00"^^xsd:dateTime ;
+  dct:modified "2016-08-23T09:37:05"^^xsd:dateTime ;
+  :requestState :SUBSCRIPTION_REQUEST_PENDING ;
+  :topic <urn:lucid:masterdata> ;
+  :hub <http://localhost:9090/pubsub/virtuoso/hub> ;
+  :targetEndpointId "default" ;
+  :targetGraph <urn:lucid:masterdata> ;
 .
 
-ex:3f7c6128876dd6b37de711df6e080854 a :SubscriptionRequest ;
-  dct:created "2016-07-11T13:37:00"^^xsd:dateTime ;
-  dct:modified "2016-07-11T13:37:05"^^xsd:dateTime ;
+ex:0d053e28c41a47f11c3035a82bb4a06c a :GraphSyncSubscriptionRequest, :SubscriptionRequest ;
+  dct:created "2016-08-22T20:11:00"^^xsd:dateTime ;
+  dct:modified "2016-08-23T09:40:05"^^xsd:dateTime ;
+  :requestState :SUBSCRIPTION_REQUEST_VERIFIED ;
+  :topic <http://aksw.org/> ;
+  :hub <http://localhost:9090/pubsub/stardog/hub> ;
+  :targetEndpointId "default" ;
+  :targetGraph <http://aksw.org/> ;
+.
+
+ex:3f6ed2b7b08b1bd3bc544cf77dd7ff49 a :GraphSyncSubscriptionRequest, :SubscriptionRequest ;
+  dct:created "2016-08-22T20:17:00"^^xsd:dateTime ;
+  dct:modified "2016-08-23T09:49:05"^^xsd:dateTime ;
   :requestState :SUBSCRIPTION_REQUEST_DENIED ;
-  :topic <http://example.org/topic/bar> ;
-  :hub <http://example.org/pubsub/hub> ;
-  :deniedReason "Anonymous subscriptions are not allowed." ;
+  :topic <urn:unreadable> ;
+  :hub <http://localhost:9090/pubsub/stardog/hub> ;
+  :targetEndpointId "default" ;
+  :targetGraph <urn:writable> ;
+  :deniedReason "No read permission for requested graph" ;
 .
