@@ -11,7 +11,7 @@
 ex:d3b07384d113edec49eaa6238ad5ff00 a :Subscription ;
   dct:created "2016-07-11T12:12:05"^^xsd:dateTime ;
   dct:modified "2016-07-11T12:12:05"^^xsd:dateTime ;
-  :state :SUBSCRIPTION_ACTIVE ;
+  :state :SUBSCRIPTION_SUBSCRIBED ;
   :topic <http://example.org/topic/foo> ;
   :callback <http://example.org/pubsub/549e80f319af070f8ea8d0f149a149c2> ;
   :secret "foo"^^xsd:string ;
