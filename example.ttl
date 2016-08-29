@@ -1,6 +1,7 @@
 @prefix : <https://vocab.eccenca.com/pubsub/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ex: <http://example.org/> .
 
 #
@@ -29,33 +30,47 @@ ex:c157a79031e1c40f85931829bc5fc552 a :Subscription ;
 # Subscription Request Repository
 #
 
-ex:7d28311bdb270e2799cc79304a9df22e a :GraphSyncSubscriptionRequest, :SubscriptionRequest ;
+ex:7d28311bdb270e2799cc79304a9df22e a :GraphSubscription , :Subscription ;
   dct:created "2016-08-22T20:06:00"^^xsd:dateTime ;
   dct:modified "2016-08-23T09:37:05"^^xsd:dateTime ;
-  :requestState :SUBSCRIPTION_REQUEST_PENDING ;
+  :state :SUBSCRIPTION_REQUESTED ;
   :topic <urn:lucid:masterdata> ;
   :hub <http://localhost:9090/pubsub/virtuoso/hub> ;
   :targetEndpointId "default" ;
   :targetGraph <urn:lucid:masterdata> ;
+  rdfs:label "masterdata subscription" ;
 .
 
-ex:0d053e28c41a47f11c3035a82bb4a06c a :GraphSyncSubscriptionRequest, :SubscriptionRequest ;
+ex:0d053e28c41a47f11c3035a82bb4a06c a :GraphSubscription , :Subscription ;
   dct:created "2016-08-22T20:11:00"^^xsd:dateTime ;
   dct:modified "2016-08-23T09:40:05"^^xsd:dateTime ;
-  :requestState :SUBSCRIPTION_REQUEST_VERIFIED ;
+  :state :SUBSCRIPTION_SUBSCRIBED ;
   :topic <http://aksw.org/> ;
   :hub <http://localhost:9090/pubsub/stardog/hub> ;
   :targetEndpointId "default" ;
   :targetGraph <http://aksw.org/> ;
+  rdfs:label "AKSW subscription" ;
 .
 
-ex:3f6ed2b7b08b1bd3bc544cf77dd7ff49 a :GraphSyncSubscriptionRequest, :SubscriptionRequest ;
+ex:3f6ed2b7b08b1bd3bc544cf77dd7ff49 a :GraphSubscription , :Subscription ;
   dct:created "2016-08-22T20:17:00"^^xsd:dateTime ;
   dct:modified "2016-08-23T09:49:05"^^xsd:dateTime ;
-  :requestState :SUBSCRIPTION_REQUEST_DENIED ;
+  :state :SUBSCRIPTION_DENIED ;
   :topic <urn:unreadable> ;
   :hub <http://localhost:9090/pubsub/stardog/hub> ;
   :targetEndpointId "default" ;
   :targetGraph <urn:writable> ;
+  rdfs:label "denied subscription" ;
   :deniedReason "No read permission for requested graph" ;
+.
+
+ex:3f6ed2b7c38b1bd3bc544cf77dd7ff49 a :GraphSubscription , :Subscription ;
+  dct:created "2016-08-26T19:42:05"^^xsd:dateTime ;
+  dct:modified "2016-08-26T20:15:00"^^xsd:dateTime ;
+  :state :SUBSCRIPTION_UNSUBSCRIBED ;
+  :topic <urn:foo> ;
+  :hub <http://localhost:9090/pubsub/foo/hub> ;
+  :targetEndpointId "foo" ;
+  :targetGraph <urn:foo> ;
+  rdfs:label "unsubscribed subscription" ;
 .
