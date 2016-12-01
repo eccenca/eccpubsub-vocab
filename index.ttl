@@ -19,7 +19,7 @@
   rdfs:comment "The eccenca Publish-Subscribe Vocabulary defines concepts and relations to create statements about publishers, subscribers and their subscriptions in a Publish-Subscribe environment based on the PubSubHubbub Core 0.4 specification."@en ;
   rdfs:isDefinedBy : ;
   dct:issued "2016-07-12"^^xsd:date ;
-  dct:modified "2016-08-26"^^xsd:date ;
+  dct:modified "2016-12-01"^^xsd:date ;
   owl:versionInfo "SNAPSHOT" ;
   dct:rights "Copyright © 2016 eccenca GmbH" ;
   dct:publisher ecc:eccenca-GmbH ;
@@ -72,7 +72,7 @@ aksw:MarvinFrommhold
   rdfs:comment "A unique relation to a topic by a subscriber that indicates it wants to receive updates for that topic."@en ;
   rdfs:isDefinedBy : ;
   dct:issued "2016-07-12"^^xsd:date ;
-  dct:modified "2016-08-26"^^xsd:date ;
+  dct:modified "2016-12-01"^^xsd:date ;
   vs:term_status "testing"@en ;
   rdfs:subClassOf [
     a owl:Restriction ;
@@ -86,28 +86,34 @@ aksw:MarvinFrommhold
   ] ;
   rdfs:subClassOf [
     a owl:Restriction ;
-    owl:onProperty :state ;
-    owl:cardinality "1"^^xsd:nonNegativeInteger
-  ] ;
-  rdfs:subClassOf [
-    a owl:Restriction ;
     owl:onProperty :topic ;
     owl:cardinality "1"^^xsd:nonNegativeInteger
   ] ;
   rdfs:subClassOf [
     a owl:Restriction ;
-    owl:onProperty :callback ;
-    owl:maxCardinality "1"^^xsd:nonNegativeInteger
-  ] ;
-  rdfs:subClassOf [
-    a owl:Restriction ;
     owl:onProperty :hub ;
-    owl:maxCardinality "1"^^xsd:nonNegativeInteger
+    owl:cardinality "1"^^xsd:nonNegativeInteger
   ] ;
   rdfs:subClassOf [
     a owl:Restriction ;
     owl:onProperty :secret ;
     owl:maxCardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+.
+
+:SubscriberSubscription
+  a owl:Class ;
+  rdfs:subClassOf :Subscription ;
+  rdfs:label "subscriber subscription"@en ;
+  rdfs:comment "Representation of a subscription on the subscriber side."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-12-01"^^xsd:date ;
+  dct:modified "2016-12-01"^^xsd:date ;
+  vs:term_status "testing"@en ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :state ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
   ] ;
   rdfs:subClassOf [
     a owl:Restriction ;
@@ -116,9 +122,25 @@ aksw:MarvinFrommhold
   ] ;
 .
 
-:GraphSubscription
+:PublisherSubscription
   a owl:Class ;
   rdfs:subClassOf :Subscription ;
+  rdfs:label "publisher subscription"@en ;
+  rdfs:comment "Representation of a subscription on the publisher side."@en ;
+  rdfs:isDefinedBy : ;
+  dct:issued "2016-12-01"^^xsd:date ;
+  dct:modified "2016-12-01"^^xsd:date ;
+  vs:term_status "testing"@en ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :callback ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+  ] ;
+.
+
+:GraphSubscription
+  a owl:Class ;
+  rdfs:subClassOf :SubscriberSubscription ;
   rdfs:label "graph subscription"@en ;
   rdfs:comment "A subscription to an RDF graph."@en ;
   rdfs:isDefinedBy : ;
@@ -179,7 +201,7 @@ aksw:MarvinFrommhold
   vs:term_status "testing"@en ;
   owl:equivalentClass [
    a owl:Class ;
-   owl:oneOf ( :SUBSCRIPTION_REQUESTED :SUBSCRIPTION_SUBSCRIBED :SUBSCRIPTION_UNSUBSCRIBED :SUBSCRIPTION_DENIED )
+   owl:oneOf ( :SUBSCRIPTION_INITIATED :SUBSCRIPTION_SUBSCRIBED :SUBSCRIPTION_UNSUBSCRIBED :SUBSCRIPTION_DENIED )
  ]
 .
 
@@ -190,12 +212,12 @@ aksw:MarvinFrommhold
 :state
   a owl:ObjectProperty ;
   rdfs:label "has subscription state"@en ;
-  rdfs:comment "The state of a subscription."@en ;
+  rdfs:comment "The state of a subscriber subscription."@en ;
   rdfs:isDefinedBy : ;
-  rdfs:domain :Subscription ;
+  rdfs:domain :SubscriberSubscription ;
   rdfs:range :SubscriptionState ;
   dct:issued "2016-07-12"^^xsd:date ;
-  dct:modified "2016-07-12"^^xsd:date ;
+  dct:modified "2016-12-01"^^xsd:date ;
   vs:term_status "testing"@en ;
 .
 
@@ -216,10 +238,10 @@ aksw:MarvinFrommhold
   rdfs:label "has callback URL"@en ;
   rdfs:comment "The callback URL at which a subscriber wishes to receive notifications."@en ;
   rdfs:isDefinedBy : ;
-  rdfs:domain :Subscription ;
+  rdfs:domain :PublisherSubscription ;
   rdfs:range :CallbackEndpoint ;
   dct:issued "2016-07-12"^^xsd:date ;
-  dct:modified "2016-07-12"^^xsd:date ;
+  dct:modified "2016-12-01"^^xsd:date ;
   vs:term_status "testing"@en ;
 .
 
@@ -287,13 +309,13 @@ aksw:MarvinFrommhold
 # Individuals
 #
 
-:SUBSCRIPTION_REQUESTED
+:SUBSCRIPTION_INITIATED
   a :SubscriptionState ;
-  rdfs:label "requested"@en ;
-  rdfs:comment "Indicates that a subscription request was successfully sent to the hub but the subscription is not yet verified."@en ;
+  rdfs:label "initiated"@en ;
+  rdfs:comment "Indicates that a subscription was successfully initiated but it is not yet verified by the hub."@en ;
   rdfs:isDefinedBy : ;
   dct:issued "2016-07-12"^^xsd:date ;
-  dct:modified "2016-08-26"^^xsd:date ;
+  dct:modified "2016-12-01"^^xsd:date ;
   vs:term_status "testing"@en ;
 .
 

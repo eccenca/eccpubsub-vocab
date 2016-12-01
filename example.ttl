@@ -5,35 +5,34 @@
 @prefix ex: <http://example.org/> .
 
 #
-# Subscription Repository
+# Publisher Subscriptions
 #
 
-ex:d3b07384d113edec49eaa6238ad5ff00 a :Subscription ;
+ex:d3b07384d113edec49eaa6238ad5ff00 a :PublisherSubscription ;
   dct:created "2016-07-11T12:12:05"^^xsd:dateTime ;
   dct:modified "2016-07-11T12:12:05"^^xsd:dateTime ;
-  :state :SUBSCRIPTION_SUBSCRIBED ;
   :topic <http://example.org/topic/foo> ;
+  :hub <http://example.org/hub> ;
   :callback <http://example.org/pubsub/549e80f319af070f8ea8d0f149a149c2> ;
   :secret "foo"^^xsd:string ;
 .
 
-ex:c157a79031e1c40f85931829bc5fc552 a :Subscription ;
+ex:c157a79031e1c40f85931829bc5fc552 a :PublisherSubscription ;
   dct:created "2016-07-11T13:37:05"^^xsd:dateTime ;
   dct:modified "2016-07-11T13:37:05"^^xsd:dateTime ;
-  :state :SUBSCRIPTION_DENIED ;
   :topic <http://example.org/topic/bar> ;
+  :hub <http://example.org/hub> ;
   :callback <http://example.org/pubsub/3f7c6128876dd6b37de711df6e080854> ;
-  :deniedReason "Not authorized" ;
 .
 
 #
-# Subscription Request Repository
+# Subscriber Subscriptions
 #
 
-ex:7d28311bdb270e2799cc79304a9df22e a :GraphSubscription , :Subscription ;
+ex:7d28311bdb270e2799cc79304a9df22e a :GraphSubscription ;
   dct:created "2016-08-22T20:06:00"^^xsd:dateTime ;
   dct:modified "2016-08-23T09:37:05"^^xsd:dateTime ;
-  :state :SUBSCRIPTION_REQUESTED ;
+  :state :SUBSCRIPTION_INITIATED ;
   :topic <urn:lucid:masterdata> ;
   :hub <http://localhost:9090/pubsub/virtuoso/hub> ;
   :targetEndpointId "default" ;
@@ -41,18 +40,19 @@ ex:7d28311bdb270e2799cc79304a9df22e a :GraphSubscription , :Subscription ;
   rdfs:label "masterdata subscription" ;
 .
 
-ex:0d053e28c41a47f11c3035a82bb4a06c a :GraphSubscription , :Subscription ;
+ex:0d053e28c41a47f11c3035a82bb4a06c a :GraphSubscription ;
   dct:created "2016-08-22T20:11:00"^^xsd:dateTime ;
   dct:modified "2016-08-23T09:40:05"^^xsd:dateTime ;
   :state :SUBSCRIPTION_SUBSCRIBED ;
   :topic <http://aksw.org/> ;
   :hub <http://localhost:9090/pubsub/stardog/hub> ;
+  :secret "bar"^^xsd:string ;
   :targetEndpointId "default" ;
   :targetGraph <http://aksw.org/> ;
   rdfs:label "AKSW subscription" ;
 .
 
-ex:3f6ed2b7b08b1bd3bc544cf77dd7ff49 a :GraphSubscription , :Subscription ;
+ex:3f6ed2b7b08b1bd3bc544cf77dd7ff49 a :GraphSubscription ;
   dct:created "2016-08-22T20:17:00"^^xsd:dateTime ;
   dct:modified "2016-08-23T09:49:05"^^xsd:dateTime ;
   :state :SUBSCRIPTION_DENIED ;
@@ -64,7 +64,7 @@ ex:3f6ed2b7b08b1bd3bc544cf77dd7ff49 a :GraphSubscription , :Subscription ;
   :deniedReason "No read permission for requested graph" ;
 .
 
-ex:3f6ed2b7c38b1bd3bc544cf77dd7ff49 a :GraphSubscription , :Subscription ;
+ex:3f6ed2b7c38b1bd3bc544cf77dd7ff49 a :GraphSubscription ;
   dct:created "2016-08-26T19:42:05"^^xsd:dateTime ;
   dct:modified "2016-08-26T20:15:00"^^xsd:dateTime ;
   :state :SUBSCRIPTION_UNSUBSCRIBED ;
